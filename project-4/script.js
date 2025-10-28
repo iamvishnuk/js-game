@@ -13,21 +13,28 @@ let gameFrame = 0;
 class Enemy {
   constructor() {
     this.image = new Image();
-    this.image.src = "enemy1.png";
-    // this.speed = Math.random() * 4 - 2; // generate random number between -2 -- 2
-    this.spriteWidth = 293;
-    this.spriteHeight = 155;
+    this.image.src = "enemy2.png";
+    this.speed = Math.random() * 4 + 1;
+    this.spriteWidth = 266;
+    this.spriteHeight = 188;
     this.width = this.spriteWidth / 3;
     this.height = this.spriteHeight / 3;
     this.x = Math.random() * (CANVAS_WIDTH - this.width);
     this.y = Math.random() * (CANVAS_HEIGHT - this.height);
     this.frame = 0;
     this.flapSpeed = Math.floor(Math.random() * 4 + 1); // generate random number between 1 to 4
+    this.angle = Math.random() * 2;
+    this.angleSpeed = Math.random() * 0.2;
+    this.curve = Math.random() * 7;
   }
 
   update() {
-    this.x += Math.random() * 15 - 7.5;
-    this.y += Math.random() * 10 - 5;
+    this.x -= this.speed;
+    this.y += this.curve * Math.sin(this.angle);
+    this.angle += this.angleSpeed;
+    if (this.x + this.width < 0) {
+      this.x = CANVAS_WIDTH;
+    }
     if (gameFrame % this.flapSpeed === 0) {
       this.frame > 4 ? (this.frame = 0) : this.frame++;
     }
